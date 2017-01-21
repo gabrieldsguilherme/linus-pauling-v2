@@ -21,7 +21,7 @@
             <div class="bar bar-header bar-positive">
                 <h1 class="title">Linus Pauling</h1>
             </div>
-
+            
             <ion-content>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Elétrons</span>
@@ -42,9 +42,9 @@
                 </ion-list>
 
                 <div class="list" ng-hide="eletrons > 0 && eletrons < 113">
-                    <div class="card">
+                    <div class="card" ng-show="informacao">
                         <div class="item item-text-wrap">
-                            A tabela de linus pauling aceita somente um número de elétrons entre 1 e 112! :)  
+                            {{informacao}}
                         </div>
                     </div>
                 </div>
