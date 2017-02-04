@@ -1,7 +1,7 @@
 var linus = angular.module('linus', []);
 
 const MIN_VALUE = 1;
-const MAX_VALUE = 112;
+const MAX_VALUE = 118;
 
 const SHARP = 's';
 const PRINCIPAL = 'p';
@@ -9,7 +9,7 @@ const DIFFUSE = 'd'
 const FUNDAMENTAL = 'f';
 
 linus.controller('CalculoController', ['$scope', function($scope) {
-	$scope.informacao = 'O diagrama de Linus Pauling aceita somente elementos com número atômico entre 1 e 112! :)'
+	$scope.informacao = 'O diagrama de Linus Pauling trabalha com os elementos da tabela periódica que vão de 1 à 118, do Hidrogênio ao Ununóctio :)'
 
 	$scope.ordemEnergetica = ' ';
 	$scope.ordemGeometrica = ' ';
@@ -115,7 +115,8 @@ linus.controller('CalculoController', ['$scope', function($scope) {
 	        [6, PRINCIPAL, 6],
 	        [7, SHARP, 2],
 	        [5, FUNDAMENTAL, 14],
-	        [6, DIFFUSE, 10]
+	        [6, DIFFUSE, 10],
+	        [7, PRINCIPAL, 6]
 	    ];
 	}
 
