@@ -26,11 +26,11 @@
             
             <ion-content>
                 <label class="item item-input item-floating-label">
-                    <span class="input-label">Elétrons</span>
-                    <input type="number" placeholder="Digite o número de elétrons" ng-model="eletrons">
+                    <span class="input-label">Número atômico</span>
+                    <input type="number" placeholder="Digite o número atômico do elemento" ng-model="numeroAtomico">
                 </label>
 
-                <ion-list ng-show="eletrons > 0 && eletrons < 113">
+                <ion-list ng-show="calculos">
                     <ion-item ng-repeat="calculo in calculos.calculos">
                         <div class="item item-divider">
                             {{calculo.titulo}}
@@ -43,7 +43,7 @@
                     </ion-item>
                 </ion-list>
 
-                <div class="list" ng-hide="eletrons > 0 && eletrons < 113">
+                <div class="list" ng-hide="calculos">
                     <div class="card" ng-show="informacao">
                         <div class="item item-text-wrap">
                             {{informacao}}

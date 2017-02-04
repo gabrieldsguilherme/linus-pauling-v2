@@ -1,21 +1,31 @@
 var linus = angular.module('linus', []);
 
-linus.controller('CalculoController', ['$scope', function($scope) {
+const MIN_VALUE = 1;
+const MAX_VALUE = 112;
 
-	$scope.informacao = 'O diagrama de Linus Pauling aceita somente um número de elétrons entre 1 e 112! :)'
+const SHARP = 's';
+const PRINCIPAL = 'p';
+const DIFFUSE = 'd'
+const FUNDAMENTAL = 'f';
+
+linus.controller('CalculoController', ['$scope', function($scope) {
+	$scope.informacao = 'O diagrama de Linus Pauling aceita somente elementos com número atômico entre 1 e 112! :)'
+
 	$scope.ordemEnergetica = ' ';
 	$scope.ordemGeometrica = ' ';
 	$scope.eletronsPorCamada = ' ';
 	$scope.subnivelMaisEnergetico = ' ';
 	$scope.camadaDeValencia = ' ';
 
-	$scope.$watch('eletrons', function(newValue, oldValue) {
-		if (newValue > 0 && newValue < 113) {
+	$scope.$watch('numeroAtomico', function(newValue, oldValue) {
+		if (newValue >= MIN_VALUE && newValue <= MAX_VALUE) {
 			calcular(newValue);
+		} else {
+			$scope.calculos = '';
 		}
 	});
 
-	calcular = function(eletrons) {
+	calcular = function(numeroAtomico) {
         let elementos = getElementos();
         let ordemEnergetica = '';
         let ordemGeometrica = [];
@@ -29,15 +39,15 @@ linus.controller('CalculoController', ['$scope', function($scope) {
         let i = 0;
         let total = 0;
 
-        while (eletrons > total) {
+        while (numeroAtomico > total) {
             let elemento = '';
             elemento += elementos[i][0] + elementos[i][1];
 
-            if (eletrons > total + elementos[i][2]) {
+            if (numeroAtomico > total + elementos[i][2]) {
                 elemento += elementos[i][2];
                 ordemEnergetica += elemento + ', ';
             } else {
-                elemento += eletrons - total;
+                elemento += numeroAtomico - total;
                 ordemEnergetica += elemento;
                 ordemGeometrica[elemento.charAt(0) - 1] = getElementoParaCamada(ordemGeometrica, elemento);
                 eletronsParaAdicionarNaCamada = getEletronsParaAdicionarNaCamada(elemento);
@@ -88,24 +98,24 @@ linus.controller('CalculoController', ['$scope', function($scope) {
 
 	function getElementos() {
 	    return [
-	        [1, 's', 2],
-	        [2, 's', 2],
-	        [2, 'p', 6],
-	        [3, 's', 2],
-	        [3, 'p', 6],
-	        [4, 's', 2],
-	        [3, 'd', 10],
-	        [4, 'p', 6],
-	        [5, 's', 2],
-	        [4, 'd', 10],
-	        [5, 'p', 6],
-	        [6, 's', 2],
-	        [4, 'f', 14],
-	        [5, 'd', 10],
-	        [6, 'p', 6],
-	        [7, 's', 2],
-	        [5, 'f', 14],
-	        [6, 'd', 10]
+	        [1, SHARP, 2],
+	        [2, SHARP, 2],
+	        [2, PRINCIPAL, 6],
+	        [3, SHARP, 2],
+	        [3, PRINCIPAL, 6],
+	        [4, SHARP, 2],
+	        [3, DIFFUSE, 10],
+	        [4, PRINCIPAL, 6],
+	        [5, SHARP, 2],
+	        [4, DIFFUSE, 10],
+	        [5, PRINCIPAL, 6],
+	        [6, SHARP, 2],
+	        [4, FUNDAMENTAL, 14],
+	        [5, DIFFUSE, 10],
+	        [6, PRINCIPAL, 6],
+	        [7, SHARP, 2],
+	        [5, FUNDAMENTAL, 14],
+	        [6, DIFFUSE, 10]
 	    ];
 	}
 
