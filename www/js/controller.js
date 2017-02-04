@@ -2,7 +2,7 @@ var linus = angular.module('linus', []);
 
 linus.controller('CalculoController', ['$scope', function($scope) {
 
-	$scope.informacao = 'A tabela de linus pauling aceita somente um número de elétrons entre 1 e 112! :)'
+	$scope.informacao = 'O diagrama de Linus Pauling aceita somente um número de elétrons entre 1 e 112! :)'
 	$scope.ordemEnergetica = ' ';
 	$scope.ordemGeometrica = ' ';
 	$scope.eletronsPorCamada = ' ';
