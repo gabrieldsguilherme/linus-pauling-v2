@@ -30,18 +30,14 @@
                     <input type="number" placeholder="Digite o número atômico do elemento" ng-model="numeroAtomico">
                 </label>
 
-                <ion-list ng-show="calculos">
-                    <ion-item ng-repeat="calculo in calculos.calculos">
-                        <div class="item item-divider">
-                            {{calculo.titulo}}
-                        </div>
-                        <div class="card">
-                            <div class="item item-text-wrap">
-                                {{calculo.valor}}
-                            </div>
-                        </div>
-                    </ion-item>
-                </ion-list>
+                <div class="card" ng-show="calculos" ng-repeat="calculo in calculos.calculos">
+                    <div class="item item-divider">
+                        {{calculo.titulo}}
+                    </div>
+                    <div class="item item-text-wrap">
+                        {{calculo.valor}}
+                    </div>
+                </div>
 
                 <div class="list" ng-hide="calculos">
                     <div class="card" ng-show="informacao">
