@@ -1,4 +1,4 @@
-var linus = angular.module('linus', []);
+var linus = angular.module('linus');
 
 const MIN_VALUE = 1;
 const MAX_VALUE = 118;
