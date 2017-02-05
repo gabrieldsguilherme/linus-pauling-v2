@@ -8,86 +8,83 @@ const PRINCIPAL = 'p';
 const DIFFUSE = 'd'
 const FUNDAMENTAL = 'f';
 
-linus.controller('CalculoController', ['$scope', function($scope) {
+linus.controller('CalculoController', function($scope) {
 	$scope.informacao = 'O diagrama de Linus Pauling trabalha com os elementos da tabela periódica que vão de 1 à 118, do Hidrogênio ao Ununóctio'
 
-	$scope.$watch('numeroAtomico', function(newValue, oldValue) {
-		if (newValue >= MIN_VALUE && newValue <= MAX_VALUE) {
-			calcular(newValue);
-		} else {
+	$scope.calcular = function(numeroAtomico) {
+		if (numeroAtomico < MIN_VALUE || numeroAtomico > MAX_VALUE) {
 			$scope.calculos = '';
+		} else {
+			let elementos = getElementos();
+	        let ordemEnergetica = '';
+	        let ordemGeometrica = [];
+	        let ordemGeometricaFormatada = '';
+	        let eletronsPorCamada = inicializaEletronsPorCamada();
+	        let eletronsParaAdicionarNaCamada = 0;
+	        let eletronsPorCamadaFormatado = '';
+	        let subnivelMaisEnergetico = '';
+	        let camadaValencia = '';
+
+	        let i = 0;
+	        let total = 0;
+
+	        while (numeroAtomico > total) {
+	            let elemento = '';
+	            elemento += elementos[i][0] + elementos[i][1];
+
+	            if (numeroAtomico > total + elementos[i][2]) {
+	                elemento += elementos[i][2];
+	                ordemEnergetica += elemento + ', ';
+	            } else {
+	                elemento += numeroAtomico - total;
+	                ordemEnergetica += elemento;
+	                ordemGeometrica[elemento.charAt(0) - 1] = getElementoParaCamada(ordemGeometrica, elemento);
+	                eletronsParaAdicionarNaCamada = getEletronsParaAdicionarNaCamada(elemento);
+	                eletronsPorCamada[elemento.charAt(0) - 1] += eletronsParaAdicionarNaCamada;
+	                subnivelMaisEnergetico = 'Subnível ' + elemento + '.';
+	                break;
+	            }
+
+	            ordemGeometrica[elemento.charAt(0) - 1] = getElementoParaCamada(ordemGeometrica, elemento) + ' ';
+
+	            eletronsParaAdicionarNaCamada = getEletronsParaAdicionarNaCamada(elemento);
+
+	            eletronsPorCamada[elemento.charAt(0) - 1] += eletronsParaAdicionarNaCamada;
+
+	            total += elementos[i][2];
+	            i++;
+	        }
+
+	        ordemGeometricaFormatada = formatarENomearCamadas(ordemGeometrica);
+	        eletronsPorCamadaFormatado = getEletronsPorCamada(eletronsPorCamada);
+	        camadaValencia = getUltimaCamada(eletronsPorCamada);
+
+			$scope.calculos = {
+				"calculos": [
+					{
+						"titulo": "Ordem Energética",
+						"valor": ordemEnergetica
+					},
+					{
+						"titulo": "Ordem Geométrica",
+						"valor": ordemGeometricaFormatada
+					},
+					{
+						"titulo": "Elétrons por Camada",
+						"valor": eletronsPorCamadaFormatado
+					},
+					{
+						"titulo": "Subnível Mais Energético",
+						"valor": subnivelMaisEnergetico
+					},
+					{
+						"titulo": "Camada de Valência",
+						"valor": camadaValencia
+					}
+				]
+			}
 		}
-	});
-
-	calcular = function(numeroAtomico) {
-        let elementos = getElementos();
-        let ordemEnergetica = '';
-        let ordemGeometrica = [];
-        let ordemGeometricaFormatada = '';
-        let eletronsPorCamada = inicializaEletronsPorCamada();
-        let eletronsParaAdicionarNaCamada = 0;
-        let eletronsPorCamadaFormatado = '';
-        let subnivelMaisEnergetico = '';
-        let camadaValencia = '';
-
-        let i = 0;
-        let total = 0;
-
-        while (numeroAtomico > total) {
-            let elemento = '';
-            elemento += elementos[i][0] + elementos[i][1];
-
-            if (numeroAtomico > total + elementos[i][2]) {
-                elemento += elementos[i][2];
-                ordemEnergetica += elemento + ', ';
-            } else {
-                elemento += numeroAtomico - total;
-                ordemEnergetica += elemento;
-                ordemGeometrica[elemento.charAt(0) - 1] = getElementoParaCamada(ordemGeometrica, elemento);
-                eletronsParaAdicionarNaCamada = getEletronsParaAdicionarNaCamada(elemento);
-                eletronsPorCamada[elemento.charAt(0) - 1] += eletronsParaAdicionarNaCamada;
-                subnivelMaisEnergetico = 'Subnível ' + elemento + '.';
-                break;
-            }
-
-            ordemGeometrica[elemento.charAt(0) - 1] = getElementoParaCamada(ordemGeometrica, elemento) + ' ';
-
-            eletronsParaAdicionarNaCamada = getEletronsParaAdicionarNaCamada(elemento);
-
-            eletronsPorCamada[elemento.charAt(0) - 1] += eletronsParaAdicionarNaCamada;
-
-            total += elementos[i][2];
-            i++;
-        }
-
-        ordemGeometricaFormatada = formatarENomearCamadas(ordemGeometrica);
-        eletronsPorCamadaFormatado = getEletronsPorCamada(eletronsPorCamada);
-        camadaValencia = getUltimaCamada(eletronsPorCamada);
-
-		$scope.calculos = {
-			"calculos": [
-				{
-					"titulo": "Ordem Energética",
-					"valor": ordemEnergetica
-				},
-				{
-					"titulo": "Ordem Geométrica",
-					"valor": ordemGeometricaFormatada
-				},
-				{
-					"titulo": "Elétrons por Camada",
-					"valor": eletronsPorCamadaFormatado
-				},
-				{
-					"titulo": "Subnível Mais Energético",
-					"valor": subnivelMaisEnergetico
-				},
-				{
-					"titulo": "Camada de Valência",
-					"valor": camadaValencia
-				}
-			]
-		}
+        
 	}
 
 	function getElementos() {
@@ -174,4 +171,4 @@ linus.controller('CalculoController', ['$scope', function($scope) {
 	    }
 	}
 	
-}]);
+});

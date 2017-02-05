@@ -25,15 +25,17 @@
             <ion-content>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Número atômico</span>
-                    <input type="number" placeholder="Digite o número atômico do elemento" ng-model="numeroAtomico">
+                    <input type="number" placeholder="Digite o número atômico do elemento" ng-model="numeroAtomico" ng-change="calcular(numeroAtomico)">
                 </label>
-
-                <div class="card" ng-show="calculos" ng-repeat="calculo in calculos.calculos">
-                    <div class="item item-divider">
-                        {{calculo.titulo}}
-                    </div>
-                    <div class="item item-text-wrap">
-                        {{calculo.valor}}
+                
+                <div ng-show="calculos">
+                    <div class="card" ng-show="calculos" ng-repeat="calculo in calculos.calculos">
+                        <div class="item item-divider">
+                            {{calculo.titulo}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{calculo.valor}}
+                        </div>
                     </div>
                 </div>
 
