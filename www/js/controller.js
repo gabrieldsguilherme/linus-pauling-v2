@@ -11,12 +11,6 @@ const FUNDAMENTAL = 'f';
 linus.controller('CalculoController', ['$scope', function($scope) {
 	$scope.informacao = 'O diagrama de Linus Pauling trabalha com os elementos da tabela periódica que vão de 1 à 118, do Hidrogênio ao Ununóctio :)'
 
-	$scope.ordemEnergetica = ' ';
-	$scope.ordemGeometrica = ' ';
-	$scope.eletronsPorCamada = ' ';
-	$scope.subnivelMaisEnergetico = ' ';
-	$scope.camadaDeValencia = ' ';
-
 	$scope.$watch('numeroAtomico', function(newValue, oldValue) {
 		if (newValue >= MIN_VALUE && newValue <= MAX_VALUE) {
 			calcular(newValue);
