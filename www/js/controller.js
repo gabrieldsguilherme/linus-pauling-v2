@@ -12,7 +12,8 @@ linus.controller('CalculoController', function($scope) {
 	$scope.informacao = 'O diagrama de Linus Pauling trabalha com os elementos da tabela periódica que vão de 1 à 118, do Hidrogênio ao Ununóctio'
 
 	$scope.calcular = function(numeroAtomico) {
-		if (numeroAtomico < MIN_VALUE || numeroAtomico > MAX_VALUE) {
+		if (numeroAtomico == undefined || numeroAtomico < MIN_VALUE || numeroAtomico > MAX_VALUE
+			|| String(numeroAtomico).indexOf(".") !== -1 || String(numeroAtomico).indexOf(",") !== -1) {
 			$scope.calculos = '';
 		} else {
 			let elementos = getElementos();
